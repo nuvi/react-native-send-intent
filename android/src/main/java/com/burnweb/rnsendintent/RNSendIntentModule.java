@@ -699,8 +699,10 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         Uri uri = Uri.parse(mediaPath);
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
-        this.reactContext.startActivity(sendIntent);
-
+        Activity currentActivity = getCurrentActivity();
+        if (currentActivity != null) {
+            currentActivity.startActivity(Intent.createChooser(sendIntent, "Share to"));
+        }
     }
 
     @ReactMethod
